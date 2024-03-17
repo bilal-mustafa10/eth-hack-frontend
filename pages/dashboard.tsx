@@ -69,11 +69,11 @@ export default function Dashboard() {
 
 
     const tableData = [
-        {id: 1, documentName: 'Document 1', documentTag: 'Tag 1'},
-        {id: 2, documentName: 'Document 2', documentTag: 'Tag 2'},
-        {id: 3, documentName: 'Document 3', documentTag: 'Tag 3'},
-        {id: 4, documentName: 'Document 4', documentTag: 'Tag 4'},
-        {id: 5, documentName: 'Document 5', documentTag: 'Tag 5'},
+        {id: 1, documentName: 'Year 4 Transcript', documentTag: 'Education Transcripts'},
+        {id: 2, documentName: 'Covid Vaccination', documentTag: 'Medical Records'},
+        {id: 3, documentName: 'Flu Vaccination', documentTag: 'Medical Records'},
+        {id: 4, documentName: 'Year 3 Transcript', documentTag: 'Education Transcripts'},
+        {id: 5, documentName: 'Year 2 Transcript', documentTag: 'Education Transcripts'},
     ];
 
 
