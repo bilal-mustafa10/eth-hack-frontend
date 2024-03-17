@@ -12,9 +12,9 @@ console.log(contractABI)
 
 export default function Dashboard() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [fileCategory, setFileCategory] = useState('');
-    const handleFileSelect = (e) => {
+    const handleFileSelect = (e: any) => {
         const file = e.target.files[0];
         setSelectedFile(file);
         setIsModalOpen(true);
@@ -23,6 +23,10 @@ export default function Dashboard() {
     const closeModal = () => {
         setIsModalOpen(false);
     };
+
+    const onUpload = () => {
+        console.log('Upload');
+    }
   const {address} = useAccount();
   console.log("Hi there!")
   console.log(address)
@@ -120,16 +124,22 @@ export default function Dashboard() {
                         </tbody>
                     </table>
                 </div>
-                {isModalOpen && (
-                    // Replace ModalComponent with your actual modal component
-                    <Modal
-                        fileName={selectedFile?.name !== undefined ? selectedFile.name : 'No file selected'}
-                        file={selectedFile}
-                        category={fileCategory}
-                        setCategory={setFileCategory}
-                        onClose={closeModal}
-                    />
+                {selectedFile && (
+                    <>
+                        {isModalOpen && (
+                            // Replace ModalComponent with your actual modal component
+                            <Modal
+                                fileName={selectedFile?.name !== undefined ? selectedFile.name as string : 'No file selected'}
+                                file={selectedFile}
+                                category={fileCategory}
+                                setCategory={setFileCategory}
+                                onClose={closeModal}
+                                onUpload={onUpload}
+                            />
+                        )}
+                    </>
                 )}
+
             </div>
         </Layout>
     );
