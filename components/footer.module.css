@@ -1,0 +1,35 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  justify-content: center;
+  width: 100%;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navList {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+  display: flex;
+}
+
+.navItem {
+  margin-right: 4rem; /* Adjust spacing to match your design */
+}
+
+.navItem:last-child {
+  margin-right: 0;
+}
+
+.navItem a {
+  text-decoration: none;
+  color: #000; /* Adjust link color to match your design */
+  font-family: 'Sora', sans-serif;
+}

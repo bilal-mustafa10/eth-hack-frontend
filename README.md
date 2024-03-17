@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# Sign In with Worldcoin using NextAuth.js
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+NextAuth.js is a complete open-source authentication solution.
 
-In the project directory, you can run:
+This is an example application that shows how `next-auth` can be used to implement Sign In with Worldcoin.
 
-### `npm start`
+Go to [NextAuth's documentation](https://next-auth.js.org) and [Worldcoin's Sign In documentation](https://docs.worldcoin.org/quick-start/sign-in) for more information and documentation.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Getting Started
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 1. Create the repository from the template and install dependencies
 
-### `npm test`
+Click the "Use this Template" button to create a new repository from this template.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+git clone your_repo_url
+cd your_repo_name
+pnpm i
+```
 
-### `npm run build`
+### 2. Configure your app in the Worldcoin Developer Portal
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Create a new application in the [Worldcoin Developer Portal](https://developer.worldcoin.org/). Staging apps must use the [Worldcoin Simulator](https://simulator.worldcoin.org) for authentication, whereas production apps will use the [World App](https://worldcoin.org/download).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Add your callback URLs:
+  - (staging apps only) `http://localhost:3000/api/auth/callback/worldcoin`
+  - `https://your-app-url.com/api/auth/callback/worldcoin`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Note your Client ID and Client Secret for the next step.
 
-### `npm run eject`
+### 3. Configure your local environment
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Copy the .env.example file in this directory to .env.local (which will be ignored by Git):
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+cp .env.example .env.local
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Add details for your Worldcoin application to the `.env.local` file. Get your Client ID and Client Secret from the [Worldcoin Developer Portal](https://developer.worldcoin.org/).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 3. (Optional) Configure Additional Authentication Providers
 
-## Learn More
+Worldcoin's provider is pre-configured in this template. If you wish to add more providers, change line 33 of `components/header.tsx` to `signIn()` to allow users to choose their provider from a list and follow the steps below.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Review and update options in `pages/api/auth/[...nextauth].js` as needed.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. When setting up OAuth, in the developer admin page for each of your OAuth services, you should configure the callback URL to use a callback path of `{server}/api/auth/callback/{provider}`.
 
-### Code Splitting
+e.g. For Google OAuth you would use: `http://localhost:3000/api/auth/callback/google`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+A list of configured providers and their callback URLs is available from the endpoint `/api/auth/providers`. You can find more information at https://next-auth.js.org/configuration/providers/oauth
 
-### Analyzing the Bundle Size
+3. You can also choose to specify an SMTP server for passwordless sign in via email.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### Database
 
-### Making a Progressive Web App
+A database may be needed needed to persist user accounts and to support email sign in when adding extra providers. However, you can still use NextAuth.js for authentication without a database by using OAuth for authentication. If you do not specify a database, [JSON Web Tokens](https://jwt.io/introduction) will be enabled by default.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+You **can** skip configuring a database and come back to it later if you want.
 
-### Advanced Configuration
+For more information about setting up a database, please check out the following links:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Docs: [next-auth.js.org/adapters/overview](https://next-auth.js.org/adapters/overview)
 
-### Deployment
+### 4. Start the application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+To run your site locally, use:
 
-### `npm run build` fails to minify
+```
+pnpm run dev
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+To run it in production mode, use:
+
+```
+pnpm run build
+pnpm run start
+```
+
+### 5. Preparing for Production
+
+Follow the [Deployment documentation](https://authjs.dev/guides/basics/deployment) or deploy the example instantly using [Vercel](https://vercel.com). Ensure you set your environment variables in your production environment as well.
