@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './modal.module.css'; // Ensure your CSS is updated accordingly
 
+// @ts-ignore
 const Modal = ({ fileName, file, category, setCategory, onClose, onUpload }) => {
-  const renderFilePreview = (file) => {
+  const renderFilePreview = (file: any) => {
     if (file && file.type.startsWith('image/')) {
       return (
           <>
