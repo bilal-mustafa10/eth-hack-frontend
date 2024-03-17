@@ -1,0 +1,18 @@
+.aboutContainer {
+    padding: 20px;
+    border-radius: 30px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    margin: 20px auto;
+}
+
+.dashboardTitle {
+    color: #501EE5;
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.dashboardSubtitle {
+    text-align: left;
+    margin-bottom: 12px;
+}
