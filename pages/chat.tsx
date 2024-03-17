@@ -1,6 +1,7 @@
 import styles from './chat.module.css'; // Make sure to create a corresponding CSS module file
 import Layout from "../components/layout";
 import React, { useState } from "react";
+import {askQuestion} from "../services/api";
 
 export default function Chat() {
     const [invalid, setInvalid ] = useState(false);
@@ -35,9 +36,25 @@ export default function Chat() {
             return;
         }
 
-        // Here, simulate sending the question to the backend and getting a response
+        const response = await askQuestion(question);
+
+        if (!response) {
+            console.error('Error asking question: ', response);
+            return;
+        }
+
+        if (response.status !== 200) {
+            console.error('Error asking question: ', response);
+            return;
+        }
+
+        console.log('response: ', response.data.answer['result']);
+
+        const newResponse = { question, answer: response.data.answer['result'] };
+
+        /*// Here, simulate sending the question to the backend and getting a response
         // This is where you would integrate your actual backend service or AI response
-        const newResponse = { question, answer: "This is a simulated answer." };
+        const newResponse = { question, answer: "This is a simulated answer." };*/
 
         setChat([...chat, newResponse]);
         setQuestion(''); // Clear input after sending

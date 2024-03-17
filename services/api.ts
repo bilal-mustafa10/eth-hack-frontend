@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = 'https://19d2-213-152-241-52.ngrok-free.app/';
+const BASE_URL = 'https://4179-213-152-241-52.ngrok-free.app/';
 export const axiosInstance = axios.create({ baseURL: BASE_URL });
 export const askQuestion = async (user_question: string, ) => {
     const config = {
@@ -8,11 +8,15 @@ export const askQuestion = async (user_question: string, ) => {
         headers: {'Content-Type': 'application/json',}
     }
 
-    const body = JSON.stringify({user_question,});
+    const body = JSON.stringify({
+        question:user_question,
+        paths: ['./data/health_report.txt','./data/Progress Report.txt','./data/misc.txt'],
+        collection_name: 'Education_Transcripts'
+    });
 
 
 try {
-        const response = await axiosInstance.post('generate_comments', body, config);
+        const response = await axiosInstance.post('/ask', body, config);
         return response;
     } catch (e) {
         console.log(e);
